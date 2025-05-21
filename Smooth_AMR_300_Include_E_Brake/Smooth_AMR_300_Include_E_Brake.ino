@@ -5,7 +5,7 @@
 #define CH3 14  // ปรับความเร็ว
 #define CH4 15  // ซ้าย-ขวา (แทน omega rad/s)
 #define CH7 12  // สลับโหมด (0 = Serial2, 1 = RC)
-#define AIRBRAKE_PIN 27  // 🛑 ปุ่มหยุดฉุกเฉิน (Airbrake)
+#define AIRBRAKE_PIN 27  // ปุ่มหยุดฉุกเฉิน (Airbrake)
 
 struct can_frame canMsg;
 MCP2515 mcp2515(5);  // CS = D5
@@ -40,9 +40,9 @@ void setup() {
 }
 
 void loop() {
-  // 🛑 ตรวจสอบ Airbrake ก่อนทำอย่างอื่น
+  // ตรวจสอบ Airbrake ก่อนทำอย่างอื่น
   if (digitalRead(AIRBRAKE_PIN) == HIGH) {
-    Serial.println("🛑 เข้าสู่โหมด AIRBRAKE → หยุดมอเตอร์");
+    Serial.println(" เข้าสู่โหมด AIRBRAKE → หยุดมอเตอร์");
 
     struct can_frame msg;
     msg.can_id = 0x601;
@@ -61,7 +61,7 @@ void loop() {
       delay(200);
     }
     enableMotor();
-    Serial.println("✅ ออกจากโหมด AIRBRAKE → กลับสู่ระบบปกติ");
+    Serial.println("ออกจากโหมด AIRBRAKE → กลับสู่ระบบปกติ");
     delay(500);
     return;  // ข้ามการทำงานอื่นใน loop นี้
   }
@@ -97,7 +97,7 @@ void loop() {
         Serial.print(" Z = ");
         Serial.println(target_z, 3);
       } else {
-        Serial.println("⚠️ Serial2: รูปแบบข้อมูลผิด");
+        Serial.println("Serial2: รูปแบบข้อมูลผิด");
       }
     }
   } else {
@@ -119,7 +119,7 @@ void loop() {
     target_x = forward;
     target_z = omega;
 
-    Serial.print("🕹️ จาก RC → X = ");
+    Serial.print("จาก RC → X = ");
     Serial.print(target_x, 3);
     Serial.print(" Z = ");
     Serial.println(target_z, 3);
@@ -186,5 +186,5 @@ void enableMotor() {
     }
   }
 
-  Serial.println("✅ Enable Motor ผ่าน CAN แล้ว");
+  Serial.println(" Enable Motor ผ่าน CAN แล้ว");
 }
